@@ -1,0 +1,10 @@
+{
+    "name": "Grass",
+    "id": "grass",
+
+    "type": "block",
+    "textures": {
+        "top": "./grass_top.jpg",
+        "side": "./grass_side.jpg"
+    }
+}

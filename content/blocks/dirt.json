@@ -1,0 +1,10 @@
+{
+    "name": "Dirt",
+    "id": "dirt",
+
+    "type": "block",
+    "textures": {
+        "top": "./dirt/dirt.jpg",
+        "side": "./dirt/dirt.jpg"
+    }
+}

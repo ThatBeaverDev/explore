@@ -1,0 +1,8 @@
+{
+    "name": "Grasslands",
+    "id": "grasslands",
+
+    "temperature": 0,
+    "humidity": 0.6,
+    "altitude": 0.2
+}
