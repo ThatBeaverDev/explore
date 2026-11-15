@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func LoadPackRegions(packDir string) ([]*types.PackRegion, error) {
+func LoadPackRegions(packId, packDir string) ([]*types.PackRegion, error) {
 	regionsDir := filepath.Join(packDir, "regions")
 	regionsFiles, err := os.ReadDir(regionsDir)
 	if err != nil {
@@ -37,6 +37,9 @@ func LoadPackRegions(packDir string) ([]*types.PackRegion, error) {
 				if err != nil {
 					return nil, fmt.Errorf("failed to load region: %w", err)
 				}
+
+				loadedRegion.Id = packId + "." + loadedRegion.Id
+				fmt.Println("Loaded region by id", loadedRegion.Id)
 
 				regions = append(regions, loadedRegion)
 			}

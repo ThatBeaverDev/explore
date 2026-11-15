@@ -5,6 +5,7 @@ import (
 	"explore/util"
 	"fmt"
 	"path/filepath"
+	"sync"
 
 	_ "image/jpeg"
 )
@@ -16,19 +17,29 @@ func loadPack(dir string) (*types.Pack, error) {
 		return nil, fmt.Errorf("failed to read manifest file: %w", err)
 	}
 
-	blocks, err := LoadPackBlocks(dir)
+	var wg sync.WaitGroup
+
+	var blocks []*types.LoadedBlock
+	var regions []*types.PackRegion
+
+	wg.Go(func() {
+		packBlocks, ierr := LoadPackBlocks(manifest.Id, dir)
+		blocks = packBlocks
+		if ierr != nil && err == nil {
+			err = fmt.Errorf("failed to load pack blocks: %w", ierr)
+		}
+	})
+	wg.Go(func() {
+		packRegions, ierr := LoadPackRegions(manifest.Id, dir)
+		regions = packRegions
+		if ierr != nil && err == nil {
+			err = fmt.Errorf("failed to load pack regions: %w", ierr)
+		}
+	})
+
+	wg.Wait()
 	if err != nil {
 		return nil, fmt.Errorf("failed to load pack blocks: %w", err)
-	}
-
-	regions, err := LoadPackRegions(dir)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load pack regions: %w", err)
-	}
-
-	biomes, err := LoadPackBiomes(dir)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load pack biomes: %w", err)
 	}
 
 	pack := &types.Pack{
@@ -36,7 +47,6 @@ func loadPack(dir string) (*types.Pack, error) {
 		Blocks:   blocks,
 
 		Regions: regions,
-		Biomes:  biomes,
 	}
 
 	return pack, nil

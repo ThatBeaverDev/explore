@@ -2,6 +2,9 @@ package main
 
 import (
 	"explore/loader"
+	"explore/renderer"
+	worlds "explore/world"
+	world_generator "explore/world/generator"
 	"fmt"
 )
 
@@ -21,9 +24,11 @@ func main() {
 		for _, region := range pack.Regions {
 			fmt.Println(region)
 		}
-
-		for _, biome := range pack.Biomes {
-			fmt.Println(biome)
-		}
 	}
+
+	world := worlds.New()
+	generator := world_generator.New(packloader.Registry)
+
+	gui := renderer.New(world, generator)
+	gui.StartGame()
 }

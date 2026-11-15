@@ -4,5 +4,8 @@
 
     "temperature": 0,
     "humidity": 0.6,
-    "altitude": 0.2
+    "altitude": 0.2,
+
+    "surfaceBlock": "explore.grass",
+    "undergroundBlock": "explore.stone"
 }

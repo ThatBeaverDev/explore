@@ -37,13 +37,9 @@ type PackRegion struct {
 	Temperature float64 `json:"temperature"`
 	Humidity    float64 `json:"humidity"`
 	Altitude    float64 `json:"altitude"`
-}
 
-type PackBiome struct {
-	Name string `json:"name"`
-	Id   string `json:"id"`
-
-	Region string `json:"region"`
+	SurfaceBlock     string `json:"surfaceBlock"`
+	UndergroundBlock string `json:"undergroundBlock"`
 }
 
 type Pack struct {
@@ -52,5 +48,4 @@ type Pack struct {
 	Blocks []*LoadedBlock
 
 	Regions []*PackRegion
-	Biomes  []*PackBiome
 }

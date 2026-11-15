@@ -3,6 +3,7 @@ module explore
 go 1.27.3
 
 require (
+	github.com/aquilax/go-perlin v1.1.0 // indirect
 	github.com/ebitengine/gomobile v0.0.0-20260820040257-d11f821a26a6 // indirect
 	github.com/ebitengine/hideconsole v1.0.0 // indirect
 	github.com/ebitengine/purego v0.11.0 // indirect

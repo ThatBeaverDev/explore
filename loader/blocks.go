@@ -11,7 +11,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func LoadPackBlocks(packDir string) ([]*types.LoadedBlock, error) {
+func LoadPackBlocks(packId, packDir string) ([]*types.LoadedBlock, error) {
 	blocksDir := filepath.Join(packDir, "blocks")
 	blocksFiles, err := os.ReadDir(blocksDir)
 	if err != nil {
@@ -39,6 +39,9 @@ func LoadPackBlocks(packDir string) ([]*types.LoadedBlock, error) {
 				if err != nil {
 					return nil, fmt.Errorf("failed to load block: %w", err)
 				}
+
+				loadedBlock.Block.Id = packId + "." + loadedBlock.Block.Id
+				fmt.Println("Loaded block by id", loadedBlock.Block.Id)
 
 				blocks = append(blocks, loadedBlock)
 			}
