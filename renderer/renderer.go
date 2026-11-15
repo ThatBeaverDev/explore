@@ -29,17 +29,19 @@ func New(world *types.World, generator *world_generator.Generator) *Game {
 }
 
 func (g Game) Update() error {
+	dt := 1.0 / 60.0
+
 	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		g.World.Z += 0.2
+		g.World.Z += 0.5 * dt
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.World.Z -= 0.2
+		g.World.Z -= 0.5 * dt
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.World.X += 0.2
+		g.World.X += 0.5 * dt
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.World.X -= 0.2
+		g.World.X -= 0.5 * dt
 	}
 
 	worlds.InsureChunkPresence(g.World, g.Generator, [2]int{0, 0})
