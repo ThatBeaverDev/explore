@@ -6,7 +6,7 @@ const (
 	WORLD_HEIGHT_LIMIT = 16
 
 	// Width of each chunk's horizontal sides
-	CHUNK_SIZE = 8
+	CHUNK_SIZE = 32
 
 	// Current world save version
 	CURRENT_WORLD_VERSION = 1
