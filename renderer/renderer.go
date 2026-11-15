@@ -1,10 +1,10 @@
 package renderer
 
 import (
+	"explore/constants"
 	"explore/types"
 	worlds "explore/world"
 	world_generator "explore/world/generator"
-	"fmt"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -56,7 +56,7 @@ func (g Game) Draw(screen *ebiten.Image) {
 
 	chunks := worlds.ActiveChunks(g.World, [2]int{int(g.World.X), int(g.World.Z)})
 
-	for idx, pos := range chunks {
+	for _, pos := range chunks {
 		chunk, ok := g.World.LoadedChunks[pos]
 		if !ok {
 			continue // not loaded. that's fine.
@@ -65,11 +65,10 @@ func (g Game) Draw(screen *ebiten.Image) {
 		rx := x - float64(pos[0])
 		ry := y - float64(pos[1])
 
-		screenX := cx + (rx * g.Scale)
-		screenY := cy + (ry * g.Scale)
+		screenX := cx + (rx * g.Scale * constants.CHUNK_SIZE)
+		screenY := cy + (ry * g.Scale * constants.CHUNK_SIZE)
 
 		g.DrawChunk(screen, screenX, screenY, chunk)
-		fmt.Println(idx)
 	}
 }
 
