@@ -4,8 +4,6 @@ import (
 	"explore/constants"
 	"explore/types"
 	"fmt"
-	"math/rand/v2"
-	"time"
 
 	"github.com/setanarut/fastnoise"
 )
@@ -28,31 +26,29 @@ func (g *Generator) GenerateChunk(pos types.ChunkPos) {
 				fmt.Println(g.Registry)
 				panic("Region " + region.Id + " requests block ID " + region.SurfaceBlock + " for surface but that block does not exist.")
 			}
-			undergroundBlock, ok := g.Registry.Blocks[region.UndergroundBlock]
-			if !ok {
-				fmt.Println(g.Registry)
-				panic("Region " + region.Id + " requests block ID " + region.UndergroundBlock + " for underground but that block does not exist.")
-			}
-
-			random := fastnoise.Value2D(chunkX+x, chunkZ-z, g.blockNoise)
 
 			block := surfaceBlock
-			if random > 0 {
-				block = undergroundBlock
+			if region.SurfacePerlinAltBlock != "" {
+				perlinBlock, ok := g.Registry.Blocks[region.SurfacePerlinAltBlock]
+				if !ok {
+					fmt.Println(g.Registry)
+					panic("Region " + region.Id + " requests block ID " + region.UndergroundBlock + " for underground but that block does not exist.")
+				}
+
+				random := fastnoise.Value2D(10*(chunkX+x), 10*(chunkZ-z), g.blockNoise)
+				if random > region.SurfacePerlinThreshold {
+					block = perlinBlock
+				}
 			}
 
 			chunk.Blocks[x][z] = [constants.WORLD_HEIGHT_LIMIT]types.ChunkBlock{
-				{Block: block},
+				{
+					Block:  block,
+					Region: region,
+				},
 			}
 		}
 	}
-
-	random := rand.Float64() * 2
-	dur, err := time.ParseDuration(fmt.Sprintf("%fs", random))
-	if err != nil {
-		panic(err)
-	}
-	time.Sleep(dur)
 
 	g.ChunkQueueMutex.Lock()
 	g.ChunkQueue = append(g.ChunkQueue, &chunk)

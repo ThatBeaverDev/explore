@@ -30,6 +30,12 @@ func (g *Game) DrawChunk(img *ebiten.Image, screenX, screenY float64, chunk *typ
 				op.GeoM.Scale(textureScale, textureScale)
 				op.GeoM.Translate(posX, posY)
 
+				if block.Block.Block.Id == "explore.grass" {
+					op.ColorScale.SetR(float32(block.Region.GrassTint[0]))
+					op.ColorScale.SetG(float32(block.Region.GrassTint[1]))
+					op.ColorScale.SetB(float32(block.Region.GrassTint[2]))
+				}
+
 				if cx+x == int(math.Floor(g.World.X)) && cz-z == int(math.Floor(g.World.Z)) {
 
 				} else {

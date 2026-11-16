@@ -1,0 +1,10 @@
+{
+    "name": "Mud",
+    "id": "mud",
+
+    "type": "block",
+    "textures": {
+        "top": "./mud/mud.jpg",
+        "side": "./mud/mud.jpg"
+    }
+}

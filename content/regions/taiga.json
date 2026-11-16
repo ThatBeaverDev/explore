@@ -1,0 +1,15 @@
+{
+    "name": "Taiga",
+    "id": "taiga",
+
+    "temperature": -0.2,
+    "humidity": 0.6,
+    "altitude": 0.2,
+
+    "grassTint": [1, 0.1, 0.1],
+
+    "surfaceBlock": "explore.grass",
+    "surfacePerlinBlock": "explore.mud",
+    "surfacePerlinThreshold": -0.15,
+    "undergroundBlock": "explore.dirt"
+}

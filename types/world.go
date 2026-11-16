@@ -5,7 +5,8 @@ import (
 )
 
 type ChunkBlock struct {
-	Block *LoadedBlock
+	Block  *LoadedBlock
+	Region *PackRegion
 }
 
 type ChunkBlocks [constants.CHUNK_SIZE][constants.CHUNK_SIZE][constants.WORLD_HEIGHT_LIMIT]ChunkBlock
