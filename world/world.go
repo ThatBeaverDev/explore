@@ -41,13 +41,21 @@ func ActiveChunks(world *types.World, pos types.ChunkPos) []types.ChunkPos {
 func InsureChunkPresence(world *types.World, generator *world_generator.Generator, pos types.ChunkPos) {
 	chunks := ActiveChunks(world, pos)
 
+	generator.ChunkQueueMutex.Lock()
+	for _, chunk := range generator.ChunkQueue {
+		world.LoadedChunks[chunk.Pos] = chunk
+	}
+	generator.ChunkQueue = []*types.Chunk{}
+	generator.ChunkQueueMutex.Unlock()
+
 	for _, pos := range chunks {
 		_, ok := world.LoadedChunks[pos]
 		if !ok {
 			// not loaded
-			chunk := generator.GenerateChunk(pos)
+			go generator.GenerateChunk(pos)
 
-			world.LoadedChunks[pos] = &chunk
+			// unloaded chunk
+			world.LoadedChunks[pos] = &types.Chunk{Loaded: false}
 		}
 
 	}

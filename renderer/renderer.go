@@ -46,6 +46,13 @@ func (g *Game) Update() error {
 		g.World.X += constants.PLAYER_SPEED * dt
 	}
 
+	_, dy := ebiten.Wheel()
+	if dy > 0 {
+		g.BlockPx /= 1.2
+	} else if dy < 0 {
+		g.BlockPx *= 1.2
+	}
+
 	worlds.InsureChunkPresence(g.World, g.Generator, [2]int{int(g.World.X), int(g.World.Z)})
 
 	return nil
@@ -62,7 +69,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	for _, chunkPos := range chunks {
 		chunk, ok := g.World.LoadedChunks[chunkPos]
-		if !ok {
+		if !ok || chunk.Loaded == false {
 			continue // not loaded. that's fine.
 		}
 

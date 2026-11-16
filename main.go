@@ -27,7 +27,10 @@ func main() {
 	}
 
 	world := worlds.New()
-	generator := world_generator.New(packloader.Registry)
+	generator, err := world_generator.New(packloader.Registry, 0)
+	if err != nil {
+		panic(err)
+	}
 
 	gui := renderer.New(world, generator)
 	gui.StartGame()

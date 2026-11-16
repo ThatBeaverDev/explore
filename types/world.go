@@ -14,6 +14,7 @@ type ChunkPos [2]int
 type Chunk struct {
 	Pos    ChunkPos    `json:"pos"`
 	Blocks ChunkBlocks `json:"blocks"`
+	Loaded bool        `json:"-"`
 }
 
 type ChunkMap map[ChunkPos]*Chunk
