@@ -1,13 +1,20 @@
 package renderer
 
 import (
+	"explore/constants"
 	"explore/types"
+	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func (g *Game) DrawChunk(img *ebiten.Image, screenX, screenY float64, chunk *types.Chunk) {
 	//vector.FillRect(img, chunkX, chunkY, constants.CHUNK_SIZE, constants.CHUNK_SIZE, color.RGBA{255, 255, 255, 255}, true)
+
+	cx := chunk.Pos[0] * constants.CHUNK_SIZE
+	cz := chunk.Pos[1] * constants.CHUNK_SIZE
+
+	textureScale := g.BlockPx / 16.0
 
 	for x, row := range chunk.Blocks {
 		for z, col := range row {
@@ -16,13 +23,18 @@ func (g *Game) DrawChunk(img *ebiten.Image, screenX, screenY float64, chunk *typ
 					continue
 				}
 
-				posX := screenX + (float64(x) * g.Scale)
-				posY := screenY + (float64(z) * g.Scale)
+				posX := screenX + (float64(x) * g.BlockPx)
+				posY := screenY + (float64(z) * g.BlockPx)
 
 				op := &ebiten.DrawImageOptions{}
+				op.GeoM.Scale(textureScale, textureScale)
 				op.GeoM.Translate(posX, posY)
 
-				img.DrawImage(block.Block.Top, op)
+				if cx+x == int(math.Floor(g.World.X)) && cz-z == int(math.Floor(g.World.Z)) {
+
+				} else {
+					img.DrawImage(block.Block.Top, op)
+				}
 			}
 		}
 	}

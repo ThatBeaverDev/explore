@@ -20,9 +20,20 @@ func (g *Generator) GenerateChunk(pos types.ChunkPos) types.Chunk {
 				fmt.Println(g.Registry)
 				panic("Region " + region.Id + " requests block ID " + region.SurfaceBlock + " for surface but that block does not exist.")
 			}
+			undergroundBlock, ok := g.Registry.Blocks[region.UndergroundBlock]
+			if !ok {
+				fmt.Println(g.Registry)
+				panic("Region " + region.Id + " requests block ID " + region.UndergroundBlock + " for underground but that block does not exist.")
+			}
+
+			val := z % 2
+			block := surfaceBlock
+			if val == 1 {
+				block = undergroundBlock
+			}
 
 			chunk.Blocks[x][z] = [constants.WORLD_HEIGHT_LIMIT]types.ChunkBlock{
-				{Block: surfaceBlock},
+				{Block: block},
 			}
 		}
 	}

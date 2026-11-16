@@ -13,4 +13,6 @@ const (
 )
 
 // Square of this width to load centered on the player
-const LOADED_WIDTH = 3
+const LOADED_WIDTH = 10
+
+const PLAYER_SPEED = 25

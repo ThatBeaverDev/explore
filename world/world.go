@@ -17,14 +17,19 @@ func New() *types.World {
 func ActiveChunks(world *types.World, pos types.ChunkPos) []types.ChunkPos {
 	var chunks []types.ChunkPos
 
-	LOADED_WIDTH_OFFSET := int(math.Ceil(constants.LOADED_WIDTH / 2))
+	LOADED_WIDTH_OFFSET := math.Ceil(float64(constants.LOADED_WIDTH) / 2)
+
+	playerBlockPos := [2]float64{
+		world.X / constants.CHUNK_SIZE,
+		world.Z / constants.CHUNK_SIZE,
+	}
 
 	for rx := range constants.LOADED_WIDTH {
-		x := rx - LOADED_WIDTH_OFFSET
+		x := int(math.Floor(playerBlockPos[0] + float64(rx) - LOADED_WIDTH_OFFSET))
 		for ry := range constants.LOADED_WIDTH {
-			y := ry - LOADED_WIDTH_OFFSET
+			y := int(math.Floor(playerBlockPos[1] + float64(ry) - LOADED_WIDTH_OFFSET))
 
-			pos := [2]int{x, y}
+			pos := [2]int{x, y + 1}
 
 			chunks = append(chunks, pos)
 		}
