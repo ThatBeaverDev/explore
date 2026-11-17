@@ -9,7 +9,7 @@
     "grassTint": [1, 0.1, 0.1],
 
     "surfaceBlock": "explore.grass",
-    "surfacePerlinBlock": "explore.mud",
+    "surfacePerlinBlock": "explore.deepslate",
     "surfacePerlinThreshold": -0.15,
     "undergroundBlock": "explore.dirt"
 }

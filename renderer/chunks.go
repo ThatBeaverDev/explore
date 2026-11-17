@@ -23,12 +23,19 @@ func (g *Game) DrawChunk(img *ebiten.Image, screenX, screenY float64, chunk *typ
 					continue
 				}
 
-				posX := screenX + (float64(x) * g.BlockPx)
-				posY := screenY + (float64(z) * g.BlockPx)
+				//blockX := cx + x
+				//blockZ := cz - z
+
+				blockScreenX := screenX + (float64(x) * g.BlockPx)
+				blockScreenY := screenY + (float64(z) * g.BlockPx)
 
 				op := &ebiten.DrawImageOptions{}
+				//op.GeoM.Translate(-8, -8)
+				//op.GeoM.Rotate(((4359 * float64(blockX)) + (7543 * float64(blockZ))) * math.Pi / 2)
+				//op.GeoM.Translate(8, 8)
+
 				op.GeoM.Scale(textureScale, textureScale)
-				op.GeoM.Translate(posX, posY)
+				op.GeoM.Translate(blockScreenX, blockScreenY)
 
 				if block.Block.Block.Id == "explore.grass" {
 					op.ColorScale.SetR(float32(block.Region.GrassTint[0]))

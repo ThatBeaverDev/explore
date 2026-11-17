@@ -4,7 +4,7 @@
 
     "type": "block",
     "textures": {
-        "top": "./dirt/dirt.jpg",
-        "side": "./dirt/dirt.jpg"
+        "top": "./dirt/dirt.png",
+        "side": "./dirt/dirt.png"
     }
 }

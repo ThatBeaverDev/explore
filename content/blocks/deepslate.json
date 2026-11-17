@@ -1,0 +1,10 @@
+{
+    "name": "Deepslate",
+    "id": "deepslate",
+
+    "type": "block",
+    "textures": {
+        "top": "./deepslate/deepslate_top.png",
+        "side": "./deepslate/deepslate.png"
+    }
+}
